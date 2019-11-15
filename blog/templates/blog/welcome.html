@@ -1,0 +1,8 @@
+{% extends 'blog/base_blog.html' %}
+
+{% block content %}
+<h1>Welcome, {{ name }}!</h1>
+<ul>
+    <li><a href="{% url 'posts' %}">All Posts</a></li>
+</ul>
+{% endblock %}

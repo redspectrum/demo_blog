@@ -1,0 +1,71 @@
+{% extends 'blog/base_blog.html' %}
+
+
+{% block content %}
+<div class="container">
+    <h3>Автопостинг Вк</h3>
+    <hr>
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-3">
+
+    <form method="POST" action="{% url 'image_upload' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="files" name="files">
+        <input type="submit" class="btn btn-primary" value="Upload">
+    </form>
+
+
+    <form method="POST" action="#">
+        {{ form.error }}
+        {% csrf_token %}
+         {{ form }}
+        <input type="vk_key" name="vk_key" required>
+        <input type="group_id" name="group_id">
+         <input class="btn btn-primary" type="submit" value="Upload VK" required>
+    </form>
+
+
+
+    {% for pic in pics %}
+<div class="pics" style="padding-top: 10px;">
+    <div>
+        <!--<img src="../media/file_0.jpg" style="width: 500px;">-->
+        <img src="{{ pic }}" style="width: 500px;">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Delete</button>
+        <!-- Modal -->
+    </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Удаление</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Вы точно хотите удалить файл?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <form method="post" action="{% url 'delete_image' %}">
+            {% csrf_token %}
+            <input name="image_url" value="{{ pic }}" hidden/>
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+    {% endfor %}
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
